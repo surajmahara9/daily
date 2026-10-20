@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <div class="eyebrow">PERSONAL FINANCE</div>
+      <h1>Daily Expense Tracker</h1>
+      <p>Track what you buy, how much you spend, and where your money goes.</p>
+    </header>
+
+    <section class="summary">
+      <article class="stat"><span>Today's Expense</span><strong id="todayTotal">Rs. 0.00</strong></article>
+      <article class="stat"><span>This Month</span><strong id="monthTotal">Rs. 0.00</strong></article>
+      <article class="stat"><span>All-Time Expense</span><strong id="allTotal">Rs. 0.00</strong></article>
+    </section>
+
+    <section class="panel">
+      <h2>Add an Expense</h2>
+      <form id="expenseForm" class="form-grid">
+        <label>Item name
+          <input id="itemName" type="text" placeholder="e.g. Rice, Milk, Notebook" required maxlength="100">
+        </label>
+        <label>Price per item (Rs.)
+          <input id="price" type="number" min="0" step="0.01" placeholder="100" required>
+        </label>
+        <label>Quantity
+          <input id="quantity" type="number" min="0.01" step="0.01" value="1" required>
+        </label>
+        <label>Category
+          <select id="category">
+            <option>Food</option><option>Travel</option><option>Study</option>
+            <option>Health</option><option>Home</option><option>Shopping</option><option>Other</option>
+          </select>
+        </label>
+        <label>Date
+          <input id="purchaseDate" type="date" required>
+        </label>
+        <label class="wide">Note 
+          <input id="notes" type="text" placeholder="Shop name or extra details" maxlength="250">
+        </label>
+        <button class="primary wide" type="submit" id="submitBtn">Add </button>
+        <button type="button" class="primary wide show-btn">Show</button>
+      </form>
+      
+    </section>
+
+    <section class="panel" id="historySection" hidden>
+      <div class="section-heading">
+        <h2>Expense History</h2>
+        <span class="count" id="recordCount">0 records</span>
+      </div>
+      <div class="filters">
+        <input id="search" type="search" placeholder="Search item or category...">
+        <label>From <input id="startDate" type="date"></label>
+        <label>To <input id="endDate" type="date"></label>
+        <button type="button" id="clearFilters">Clear filters</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Item</th><th>Category</th><th>Price</th><th>Qty</th><th>Total</th><th>Note</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="expenseRows"></tbody>
+        </table>
+      </div>
+      <p id="emptyMessage" class="empty">No expenses yet. Add your first expense above.</p>
+    </section>
+
+    <section class="panel backup-panel">
+      <div>
+        <h2>Backup your data</h2>
+        <p class="hint">Export a copy of your expenses so you can keep them safe.</p>
+      </div>
+      <div class="backup-actions">
+        <button type="button" id="exportBtn">Export JSON backup</button>
+        <label class="import-button">Import backup
+          <input id="importFile" type="file" accept=".json,application/json" hidden>
+        </label>
+        <button type="button" id="csvBtn">Download CSV</button>
+      </div>
+    </section>
+    <footer>Your records are saved in this browser using localStorage. Clearing browser data may delete them, so export backups regularly.</footer>
+  </main>
+
+  <dialog id="editDialog">
+    <form id="editForm">
+      <h2>Edit Expense</h2>
+      <label>Item name<input id="editName" required maxlength="100"></label>
+      <label>Price per item (Rs.)<input id="editPrice" type="number" min="0" step="0.01" required></label>
+      <label>Quantity<input id="editQuantity" type="number" min="0.01" step="0.01" required></label>
+      <label>Category
+        <select id="editCategory">
+          <option>Food</option><option>Travel</option><option>Study</option>
+          <option>Health</option><option>Home</option><option>Shopping</option><option>Other</option>
+        </select>
+      </label>
+      <label>Date<input id="editDate" type="date" required></label>
+      <label>Note<input id="editNotes" maxlength="250"></label>
+      <div class="dialog-actions">
+        <button type="button" id="cancelEdit">Cancel</button>
+        <button class="primary" type="submit">Save changes</button>
+      </div>
+    </form>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
